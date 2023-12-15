@@ -1,0 +1,106 @@
+#include<bits/stdc++.h>
+#include<iostream>
+#include<cmath>
+#include<string>
+#include<algorithm>
+#include<vector>
+#include<map>
+#include<stack>
+#include<queue>
+#include<fstream>
+#include<iomanip>
+#include<sstream>
+#include<numeric>
+#define fast ios_base::sync_with_stdio(false); cin.tie(nullptr);
+#define ll long long int
+#define yes cout<<"YES"<<'\n';
+#define no cout<<"NO"<<'\n';
+using namespace std;
+void solve(string s,string ss)
+{
+	int a=s.length(),b=ss.length();
+	if(s[a-1]=='S' || ss[b-1]=='S')
+	{
+		if(s[a-1]=='S' && ss[b-1]!='S')
+			cout<<'<'<<'\n';
+		else if(ss[b-1]=='S' && s[a-1]!='S')
+			cout<<'>'<<'\n';
+		else if(s[a-1]=='S' && ss[b-1]=='S')
+		{
+			if(a<b)
+				cout<<'>'<<'\n';
+			else if(a>b)
+				cout<<'<'<<'\n';
+			else
+				cout<<'='<<'\n';
+		}
+	}
+	else if((s.find('L')!=string::npos || ss.find('L')!=string::npos) )
+	{
+		if(s.find('L')!=string::npos && ss.find('L')==string::npos )
+			cout<<'>'<<'\n';
+		else if(s.find('L')==string::npos && ss.find('L')!=string::npos)
+			cout<<'<'<<'\n';
+		else if(s.find('L')!=string::npos && ss.find('L')!=string::npos)
+		{
+			if(a>b)
+				cout<<'>'<<'\n';
+			else if(a<b)
+				cout<<'<'<<'\n';
+			else
+				cout<<'='<<'\n';
+		}
+	}
+	else if(s[a-1]=='M' && s[b-1]=='M')
+		cout<<'='<<'\n';
+}
+int prime(int n)
+{
+	if(n<2)
+		return 0;
+	for(int i=2;i<=sqrt(n);i++)
+		if(n%i==0)
+			return 0;
+	return 1;
+}
+int main()
+{
+	fast;
+	int n;
+	cin>>n;
+	string s;
+	cin>>s;
+	stack<char> o1;
+	stack<char> n1;
+	stack<char> e1;
+	stack<char> z1;
+	stack<char> r1;
+	bool flag=false;
+	for(int i=0;i<s.length();i++)
+	{
+		if(s[i]=='o')
+			o1.push(s[i]);
+		else if(s[i]=='n')
+			n1.push(s[i]);
+		else if(s[i]=='e')
+			e1.push(s[i]);
+		else if(s[i]=='z')
+			z1.push(s[i]);
+		else
+			r1.push(s[i]);
+	}
+	int min1=min(e1.size(),min(o1.size(),n1.size()));
+	for(int i=1;i<=min1;i++)
+	{
+		o1.pop();
+		n1.pop();
+		e1.pop();
+	}
+	int max1=max(z1.size(),max(e1.size(),max(o1.size(),n1.size())));
+//	cout<<min1<<" "<<max1<<'\n';
+	
+	for(int i=1;i<=min1;i++)
+		cout<<1<<" ";
+	for(int i=1;i<=max1;i++)
+		cout<<0<<" ";
+}
